@@ -7,7 +7,7 @@ import requests
 API_KEY = "e2f8ccb4c6f0a2e1" # enter API key
 BASE_URL = "http://api.wunderground.com/api/{}/history_{}/q/India/Bhubaneswar.json"
 
-target_date = datetime(2018, 3, 26)
+target_date = datetime(2015, 6, 30)
 features = ["date", "meantempm", "meandewptm", "meanpressurem", "maxhumidity", "minhumidity", "maxtempm",
             "mintempm", "maxdewptm", "mindewptm", "maxpressurem", "minpressurem", "precipm"]
 DailySummary = namedtuple("DailySummary", features)
@@ -37,6 +37,6 @@ def extract_weather_data(url, api_key, target_date, days):
         target_date += timedelta(days=1)
     return records
 
-records = extract_weather_data(BASE_URL, API_KEY, target_date, 35)
+records = extract_weather_data(BASE_URL, API_KEY, target_date, 1000)
 df = pd.DataFrame(records, columns=features).set_index('date')  
 df.to_csv("dataset_more.csv")
