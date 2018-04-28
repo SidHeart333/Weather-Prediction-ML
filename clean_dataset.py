@@ -17,25 +17,20 @@ for feature in features:
         for N in range(1, 4):
             derive_nth_day_feature(dataframe, feature, N)    
             
-#dataframe.columns      
-
-#Removing non relevent features to reduce the dataset            
+# removing non relevent features to reduce the dataset            
 to_remove = [feature 
              for feature in features 
              if feature not in ['meantempm', 'mintempm', 'maxtempm']]
 
 to_keep = [col for col in dataframe.columns if col not in to_remove]
 
-dataframe = dataframe[to_keep]
-#dataframe.columns           
-
+dataframe = dataframe[to_keep]           
 dataframe.info()
 
-#Converting datatype of every column to float
-
+# converting datatype of every column to float
 dataframe= dataframe.apply(pd.to_numeric, errors='coerce')
 
-# Call describe on df and transpose it due to the large number of columns
+# call describe on df and transpose it due to the large number of columns
 spread = dataframe.describe().T
 
 # precalculate interquartile range for ease of use in next calculation
@@ -43,15 +38,14 @@ IQR = spread['75%'] - spread['25%']
 
 # create an outliers column which is either 3 IQRs below the first quartile or
 # 3 IQRs above the third quartile
-spread['outliers'] = (spread['min']<(spread['25%']-(3*IQR)))|(spread['max'] > (spread['75%']+3*IQR))
+spread['outliers'] = (spread['min'] < (spread['25%'] - 3 * IQR)) | (spread['max'] > (spread['75%'] + 3 * IQR))
 
 # just display the features containing extreme outliers
 spread.loc[spread.outliers,]
 
 
-#Analyzing outliers
-
-'''plt.rcParams['figure.figsize'] = [14, 8]
+# analyzing outliers
+plt.rcParams['figure.figsize'] = [14, 8]
 dataframe.maxhumidity_1.hist()
 plt.title('Distribution of maxhumidity_1')
 plt.xlabel('maxhumidity_1')
@@ -61,7 +55,8 @@ plt.rcParams['figure.figsize'] = [14, 8]
 dataframe.maxpressurem_1.hist()
 plt.title('Distribution of maxpressurem_1')
 plt.xlabel('maxpressurem_1')
-plt.show()'''
+plt.show()
 
+# drop rows containing NaN values
 dataframe=dataframe.dropna()
 dataframe.to_csv("dataset-cleaned.csv")
