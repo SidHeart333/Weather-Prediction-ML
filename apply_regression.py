@@ -6,7 +6,6 @@ dataframe = pd.read_csv('dataset-cleaned.csv').set_index('date')
 
 dataframe.corr()[['meantempm']].sort_values('meantempm')
 
-
 predictors = ['meantempm_1',  'meantempm_2',  'meantempm_3', 
               'mintempm_1',   'mintempm_2',   'mintempm_3',
               'meandewptm_1', 'meandewptm_2', 'meandewptm_3',
@@ -60,7 +59,6 @@ def backwardElimination(x, sl):
 
 X2 = backwardElimination(X, 0.05)
 X = X2
-
 
 model = sm.OLS(y, X2).fit()
 model.summary()

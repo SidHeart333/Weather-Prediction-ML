@@ -10,6 +10,7 @@ BASE_URL = "http://api.wunderground.com/api/{}/history_{}/q/India/Bhubaneswar.js
 target_date = datetime(2015, 6, 30)
 features = ["date", "meantempm", "meandewptm", "meanpressurem", "maxhumidity", "minhumidity", "maxtempm",
             "mintempm", "maxdewptm", "mindewptm", "maxpressurem", "minpressurem", "precipm"]
+            
 DailySummary = namedtuple("DailySummary", features)
 
 def extract_weather_data(url, api_key, target_date, days):  
